@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Battle Field - Choose Your Challenge</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f8ff;
+      color: #003366;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      padding: 2rem;
+    }
+    h1 {
+      color: #004080;
+      text-align: center;
+    }
+    label, select, button {
+      display: block;
+      margin: 1rem auto;
+      font-size: 1rem;
+    }
+    select, button {
+      padding: 0.5rem;
+      width: 80%;
+      max-width: 400px;
+      border-radius: 0.5rem;
+      border: 1px solid #99ccff;
+    }
+    button {
+      background-color: #004080;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0059b3;
+    }
+    a.back {
+      display: inline-block;
+      margin-bottom: 1rem;
+      color: #004080;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back">&larr; Back to Home</a>
+    <h1>⚔️ Choose Your Challenge</h1>
+    <label for="topicSelect">Select Topic:</label>
+    <select id="topicSelect" onchange="updateQuestions()">
+      <option value="">-- Choose an area --</option>
+      <option value="arrays">Arrays</option>
+      <option value="strings">Strings</option>
+      <option value="linkedlists">Linked Lists</option>
+      <option value="trees">Trees</option>
+    </select>
+
+    <label for="questionSelect">Select Question:</label>
+    <select id="questionSelect">
+      <option value="">-- Select a topic first --</option>
+    </select>
+
+    <button onclick="goToEditor()">Start Coding</button>
+  </div>
+
+  <script>
+    const questions = {
+      arrays: [
+        { label: "Sort a list of integers", file: "battle_field.html" },
+        { label: "Find max subarray sum", file: "#" },
+        { label: "Rotate array", file: "#" },
+        { label: "Merge sorted arrays", file: "#" },
+        { label: "Find duplicate number", file: "#" }
+      ],
+      strings: [
+        { label: "Reverse a string", file: "#" },
+        { label: "Check for palindrome", file: "#" },
+        { label: "Longest common prefix", file: "#" },
+        { label: "String compression", file: "#" },
+        { label: "Anagram check", file: "#" }
+      ],
+      linkedlists: [
+        { label: "Detect cycle", file: "#" },
+        { label: "Reverse list", file: "#" },
+        { label: "Merge two lists", file: "#" },
+        { label: "Find middle node", file: "#" },
+        { label: "Remove N-th from end", file: "#" }
+      ],
+      trees: [
+        { label: "Inorder traversal", file: "#" },
+        { label: "Check balanced tree", file: "#" },
+        { label: "Level-order traversal", file: "#" },
+        { label: "Lowest common ancestor", file: "#" },
+        { label: "Validate BST", file: "#" }
+      ]
+    };
+
+    function updateQuestions() {
+      const topic = document.getElementById("topicSelect").value;
+      const questionSelect = document.getElementById("questionSelect");
+      questionSelect.innerHTML = "";
+
+      if (topic && questions[topic]) {
+        questions[topic].forEach(q => {
+          const option = document.createElement("option");
+          option.value = q.file;
+          option.textContent = q.label;
+          questionSelect.appendChild(option);
+        });
+      } else {
+        const option = document.createElement("option");
+        option.textContent = "-- Select a topic first --";
+        questionSelect.appendChild(option);
+      }
+    }
+
+    function goToEditor() {
+      const questionFile = document.getElementById("questionSelect").value;
+      if (questionFile && questionFile !== "#") {
+        window.location.href = questionFile;
+      } else {
+        alert("This question is not yet implemented.");
+      }
+    }
+  </script>
+</body>
+</html>
