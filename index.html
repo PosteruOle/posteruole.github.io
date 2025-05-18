@@ -38,6 +38,19 @@
     h2 {
       color: #0f62fe;
     }
+    h3 {
+      color: #0f62fe;
+    }
+    h4 {
+      color: #0f62fe;
+    }
+    .styled-hr {
+      border: none;
+      height: 2px;
+      background-color: #0f62fe;
+      margin: 2rem 0;
+      width: 100%;
+    }
     .contact a {
       color: #0f62fe;
       text-decoration: none;
@@ -82,6 +95,8 @@
       </p>
     </section>
 
+  <hr class="styled-hr">
+
     <section class="experience">
       <h2>Work Experience</h2>
       <ul>
@@ -117,7 +132,8 @@
         <li style="margin-left: 40px;"> Part of the <strong>Plum</strong> team (C# team). </li>
       </ul>
     </section>
-    
+
+  <hr class="styled-hr">
 
     <section class="education">
       <h2>Education</h2>
@@ -138,15 +154,34 @@
       </ul>
     </section>
 
+  <hr class="styled-hr">
+
     <section class="contact">
       <h2>Contact</h2>
       <p>You can reach me at: <a href="mailto:posteru.ole@gmail.com">posteru.ole@gmail.com</a></p>
     </section>
+
+  <hr class="styled-hr">
+
     <section class="projects">
       <h2>Projects</h2>
-      <p>This is the first game I have ever played and it's evergreen. Try it out and have fun: <a href="minesweeper.html">Minesweeper</a></p>
-      <p>There is funny tool that you can run on your Linux terminal called cmatrix. Here you can try my version of the tool: <a href="matrix.html">Matrix</a></p>
-      <p>Simulation of the famous LeetCode platform. <a href="battle_field_start.html">Try the Battle Field Project</a> </p>
+      <div class="project-links">
+        <h3> Minesweeper </h3>
+            <p>This is the first game I have ever played and it's evergreen. </br></p> 
+            <p>Try it out and have fun: <a class="btn" href="minesweeper.html">🧨 Play Minesweeper</a> </br> </p>
+        <h3> Matrix </h3>
+            <p>There is funny tool that you can run on your Linux terminal called cmatrix. </br></p>
+            <p>Here you can try my version of the tool: <a class="btn" href="matrix.html">💻 View Matrix</a> </br> </p>
+        <h3> Battle field </h3>
+            <p>Simulation of the famous LeetCode platform. </br></p>
+            <p>Try out the Battle Field Project: <a class="btn" href="battle_field_start.html">⚔️ Enter Battle Field</a> </br> </p>
+            <p style="font-size: 0.9rem; color: #555;">
+                <em>Note: The Battle Field project is currently just a proof of concept. I'm working on expanding it with more algorithmic questions and new features!</em>
+            </p>
+      </div>
+
+
+
     </section>
   </div>
   <footer>
