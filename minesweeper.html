@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minesweeper Game</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+      text-align: center;
+      padding: 2rem;
+    }
+    h1 {
+      color: #0f62fe;
+    }
+    form {
+      margin-bottom: 1rem;
+    }
+    input[type="number"] {
+      padding: 0.3rem;
+      margin: 0 0.5rem;
+      width: 60px;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      margin-top: 1rem;
+      cursor: pointer;
+      background-color: #0f62fe;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+    }
+    table {
+      margin: 1rem auto;
+      border-collapse: collapse;
+    }
+    td {
+      width: 30px;
+      height: 30px;
+      border: 1px solid #999;
+      background-color: #ddd;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+      vertical-align: middle;
+    }
+    td.revealed {
+      background-color: #fff;
+      cursor: default;
+    }
+    td.flagged {
+      background-color: #ffc107;
+    }
+    .back-link {
+      display: block;
+      margin-top: 2rem;
+      color: #0f62fe;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Minesweeper</h1>
+  <form id="setupForm">
+    <label>Rows: <input type="number" id="rows" value="8" min="5" max="30" required></label>
+    <label>Cols: <input type="number" id="cols" value="8" min="5" max="30" required></label>
+    <label>Mines: <input type="number" id="mines" value="10" min="1" required></label>
+    <br><button type="submit">Start Game</button>
+  </form>
+  <table id="board"></table>
+  <a class="back-link" href="index.html">&larr; Back to Home</a>
+
+  <script>
+    let board = [];
+    let minePositions = new Set();
+    let rows, cols, mines;
+
+    document.getElementById("setupForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      rows = parseInt(document.getElementById("rows").value);
+      cols = parseInt(document.getElementById("cols").value);
+      mines = parseInt(document.getElementById("mines").value);
+      initBoard();
+    });
+
+    function initBoard() {
+      const table = document.getElementById("board");
+      table.innerHTML = "";
+      board = [];
+      minePositions = new Set();
+
+      for (let r = 0; r < rows; r++) {
+        const row = [];
+        const tr = document.createElement("tr");
+
+        for (let c = 0; c < cols; c++) {
+          const td = document.createElement("td");
+          td.dataset.row = r;
+          td.dataset.col = c;
+          td.addEventListener("click", revealCell);
+          td.addEventListener("contextmenu", toggleFlag);
+          tr.appendChild(td);
+          row.push(td);
+        }
+        table.appendChild(tr);
+        board.push(row);
+      }
+
+      while (minePositions.size < mines) {
+        const pos = Math.floor(Math.random() * rows * cols);
+        minePositions.add(pos);
+      }
+    }
+
+    function toggleFlag(event) {
+      event.preventDefault();
+      const td = event.target;
+      if (!td.classList.contains("revealed")) {
+        td.classList.toggle("flagged");
+        td.textContent = td.classList.contains("flagged") ? "🚩" : "";
+        checkWin();
+      }
+    }
+
+    function revealCell(event) {
+      const td = event.target;
+      const row = parseInt(td.dataset.row);
+      const col = parseInt(td.dataset.col);
+      const index = row * cols + col;
+
+      if (td.classList.contains("flagged")) return;
+      if (minePositions.has(index)) {
+        td.textContent = "💣";
+        td.style.backgroundColor = "#f44336";
+        alert("Game Over!");
+        revealAllMines();
+        return;
+      }
+
+      reveal(row, col);
+      checkWin();
+    }
+
+    function reveal(r, c) {
+      if (r < 0 || r >= rows || c < 0 || c >= cols) return;
+      const td = board[r][c];
+      if (td.classList.contains("revealed") || td.classList.contains("flagged")) return;
+
+      td.classList.add("revealed");
+      const count = countAdjacentMines(r, c);
+      if (count > 0) {
+        td.textContent = count;
+      } else {
+        td.textContent = "";
+        for (let dr = -1; dr <= 1; dr++) {
+          for (let dc = -1; dc <= 1; dc++) {
+            if (dr !== 0 || dc !== 0) {
+              reveal(r + dr, c + dc);
+            }
+          }
+        }
+      }
+    }
+
+    function countAdjacentMines(r, c) {
+      let count = 0;
+      for (let dr = -1; dr <= 1; dr++) {
+        for (let dc = -1; dc <= 1; dc++) {
+          const nr = r + dr;
+          const nc = c + dc;
+          if (nr >= 0 && nr < rows && nc >= 0 && nc < cols) {
+            const index = nr * cols + nc;
+            if (minePositions.has(index)) count++;
+          }
+        }
+      }
+      return count;
+    }
+
+    function revealAllMines() {
+      minePositions.forEach(pos => {
+        const r = Math.floor(pos / cols);
+        const c = pos % cols;
+        const cell = board[r][c];
+        cell.textContent = "💣";
+        cell.style.backgroundColor = "#f44336";
+      });
+    }
+
+    function checkWin() {
+      let revealedCount = 0;
+      let flaggedCount = 0;
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const td = board[r][c];
+          const index = r * cols + c;
+          if (td.classList.contains("revealed")) revealedCount++;
+          if (td.classList.contains("flagged") && minePositions.has(index)) flaggedCount++;
+        }
+      }
+      if (revealedCount + mines === rows * cols && flaggedCount === mines) {
+        setTimeout(() => alert("🎉 Congratulations, you won!"), 100);
+        revealAllMines();
+      }
+    }
+
+    document.getElementById("setupForm").dispatchEvent(new Event("submit"));
+  </script>
+</body>
+</html>
