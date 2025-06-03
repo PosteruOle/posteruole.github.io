@@ -18,6 +18,15 @@
       padding: 2rem;
       text-align: center;
     }
+    .profile-pic {
+      width: 300px;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid #004080;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 1rem;
+    }
     header h1 {
       margin: 0;
       font-size: 2.5rem;
@@ -66,6 +75,64 @@
       vertical-align: middle;
       margin-right: 8px;
     }
+    .social-icons {
+      text-align: center;
+      margin: 2rem 0;
+    }
+
+    .social-icons a {
+      display: inline-block;
+      margin: 0 1rem;
+    }
+
+    .icon {
+      width: 40px;
+      height: 40px;
+      transition: transform 0.2s ease;
+    }
+
+    .icon:hover {
+      transform: scale(1.4);
+    }
+    .side-nav {
+      width: 200px;
+      background-color: #053c8f;
+      height: 100vh;
+      padding-top: 2rem;
+      position: fixed;
+      top: 0;
+      left: 0;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .side-nav ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .side-nav li {
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .side-nav a {
+      text-decoration: none;
+      color: #f2f5f8;
+      font-weight: bold;
+      font-size: 1.1rem;
+      padding: 0.5rem 1rem;
+      display: block;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      border-radius: 8px;
+    }
+
+    .side-nav a:hover {
+      background-color: #cce0ff;
+      color: #053c8f;
+      transform: scale(1.05);
+    }
+
+
 
   </style>
 </head>
@@ -83,8 +150,17 @@
 <body>
   <header>
     <h1>Petar Tešić</h1>
-    <p>Software Engineer @ Microsoft | PhD student @ Faculty of Mathematics, University of Belgrade</p>
+    <img src="images/petar_profile_picture.jpeg" alt="Petar Tesic" class="profile-pic">
+    <p>Software Engineer @ Microsoft | PhD Student @ Faculty of Mathematics, University of Belgrade</p>
   </header>
+    <nav class="side-nav">
+    <ul>
+      <li><a href="#work-experience">Work Experience</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#projects">Projects</a></li>
+    </ul>
+  </nav>
+
   <div class="container">
     <section class="about">
       <h2>About Me</h2>
@@ -97,7 +173,7 @@
 
   <hr class="styled-hr">
 
-    <section class="experience">
+    <section id="work-experience" class="experience">
       <h2>Work Experience</h2>
       <ul>
         <img src="images/microsoft-logo-org.png" alt="Microsoft Logo" class="logo"  height="20" width="20"/>
@@ -135,7 +211,7 @@
 
   <hr class="styled-hr">
 
-    <section class="education">
+    <section id="education" class="education">
       <h2>Education</h2>
       <ul>
       <strong>PhD Candidate</strong> of Informatics at the <strong>Faculty of Mathematics, University of Belgrade</strong>
@@ -159,11 +235,28 @@
     <section class="contact">
       <h2>Contact</h2>
       <p>You can reach me at: <a href="mailto:posteru.ole@gmail.com">posteru.ole@gmail.com</a></p>
+      <div class="social-icons">
+        <a href="https://github.com/PosteruOle" target="_blank">
+          <img src="images/GitHub-Mark.png" alt="GitHub" class="icon">
+        </a>
+        <a href="https://www.linkedin.com/in/petar-te%C5%A1i%C4%87-11b667220/" target="_blank">
+          <img src="images/linkedin-logo.png" alt="LinkedIn" class="icon">
+        </a>
+        <a href="mailto:posteru.ole@gmail.com">
+          <img src="images/gmail.ico" alt="Gmail" class="icon">
+        </a>
+        <a href="https://instagram.com/yourusername" target="_blank">
+          <img src="images/instagram_icon.png" alt="Instagram" class="icon">
+        </a>
+      </div>
+
+
     </section>
 
   <hr class="styled-hr">
 
-    <section class="projects">
+    <section id="projects" class="projects">
+
       <h2>Projects</h2>
       <div class="project-links">
         <h3> Minesweeper </h3>
@@ -174,13 +267,16 @@
             <p>Here you can try my version of the tool: <a class="btn" href="matrix.html">💻 View Matrix</a> </br> </p>
         <h3> Battle field </h3>
             <p>Simulation of the famous LeetCode platform. </br></p>
-            <p>Try out the Battle Field Project: <a class="btn" href="battle_field_start.html">⚔️ Enter Battle Field</a> </br> </p>
+            <p>Try out the Battle Field Project: <a class="btn" href="battle_field/battle_field_start.html">⚔️ Enter Battle Field</a> </br> </p>
             <p style="font-size: 0.9rem; color: #555;">
                 <em>Note: The Battle Field project is currently just a proof of concept. I'm working on expanding it with more algorithmic questions and new features!</em>
             </p>
       </div>
-
-
+      <div class="project">
+        <h3>📈 Compound Interest Calculator</h3>
+        <p>A simple and stylish tool to calculate how your investments grow over time using compound interest. Includes options for principal, rate, years, and compounding frequency.</p>
+        <a href="compound_calculator.html" target="_blank" class="project-link">Try Calculator</a>
+      </div>
 
     </section>
   </div>
