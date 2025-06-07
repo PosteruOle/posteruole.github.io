@@ -62,6 +62,17 @@
       padding: 2rem;
       background-color: white;
     }
+    .scroll-container {
+      overflow-x: auto;
+    }
+    .row.flex-nowrap {
+      flex-wrap: nowrap;
+    }
+    @media (min-width: 768px) {
+      .scroll-container {
+        overflow-x: hidden;
+      }
+    }
     main {
       margin-left: 220px; /* same as sidebar width */
     }
@@ -120,8 +131,8 @@
   </style>
 </head>
 <body>
-  <div class="container-fluid">
-    <div class="row">
+  <div class="scroll-container">
+    <div class="row flex-nowrap">
       <!-- Sidebar Navigation -->
       <nav class="sidebar" style="width: 220px;">
         <a href="#work-experience">Work Experience</a>
