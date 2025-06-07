@@ -87,6 +87,8 @@
       top: 0;
       overflow-y: auto;
       color: white;
+
+      transition: all 0.3s ease-in-out;
     }
     .sidebar a {
       color: #f2f5f8;
@@ -128,11 +130,27 @@
     .icon:hover {
       transform: scale(1.4);
     }
+    /* Initial layout styling */
+    #layoutRow {
+      flex-wrap: nowrap;
+    }
+
+    /* When hidden */
+    .sidebar.hidden {
+      display: none;
+    }
+
   </style>
 </head>
 <body>
+
+  <!-- Toggle Button -->
+  <button id="toggleSidebar" class="btn btn-outline-primary d-md-none m-3">
+    &#9776;
+  </button>
+
   <div class="scroll-container">
-    <div class="row flex-nowrap">
+    <div class="row" id="layoutRow">
       <!-- Sidebar Navigation -->
       <nav class="sidebar" style="width: 220px;">
         <a href="#work-experience">Work Experience</a>
@@ -271,5 +289,15 @@
       
     </div>
   </div>
+
+<script>
+  const toggleBtn = document.getElementById('toggleSidebar');
+  const sidebar = document.getElementById('sidebar');
+
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('hidden');
+  });
+</script>
+
 </body>
 </html>
