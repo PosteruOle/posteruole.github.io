@@ -104,8 +104,26 @@
       color: #053c8f;
     }
 
-    /* Toggle Button */
-    .sidebar-toggle {
+    /* Hamburger Button inside Sidebar */
+    .hamburger-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      padding: 0.8rem;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      transition: background-color 0.3s ease;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .hamburger-btn:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Fixed hamburger button for when sidebar is collapsed on desktop */
+    .hamburger-fixed {
       position: fixed;
       top: 15px;
       left: 15px;
@@ -119,9 +137,37 @@
       cursor: pointer;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
       transition: all 0.3s ease;
+      display: none;
     }
 
-    .sidebar-toggle:hover {
+    .hamburger-fixed:hover {
+      background-color: #004080;
+      transform: translateY(-1px);
+    }
+
+    .hamburger-fixed.show {
+      display: block;
+    }
+
+    /* Mobile toggle button - only show when sidebar is closed */
+    .mobile-toggle {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 1060;
+      background-color: #0f62fe;
+      color: white;
+      border: none;
+      padding: 10px 12px;
+      border-radius: 5px;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      display: none;
+    }
+
+    .mobile-toggle:hover {
       background-color: #004080;
       transform: translateY(-1px);
     }
@@ -152,16 +198,25 @@
 
     /* Desktop: ≥1200px */
     @media (min-width: 1200px) {
-      .sidebar-toggle {
-        display: none;
-      }
-      
       main {
         margin-left: 220px;
+        transition: margin-left 0.3s ease-in-out;
+      }
+      
+      main.sidebar-collapsed {
+        margin-left: 0;
       }
       
       .sidebar {
         transform: translateX(0);
+      }
+      
+      .sidebar.collapsed {
+        transform: translateX(-100%);
+      }
+      
+      .mobile-toggle {
+        display: none;
       }
     }
 
@@ -182,6 +237,14 @@
       
       main.sidebar-open {
         margin-left: 200px;
+      }
+      
+      .mobile-toggle {
+        display: block;
+      }
+      
+      .mobile-toggle.hidden {
+        display: none;
       }
     }
 
@@ -211,6 +274,14 @@
       
       .container {
         padding: 1rem;
+      }
+      
+      .mobile-toggle {
+        display: block;
+      }
+      
+      .mobile-toggle.hidden {
+        display: none;
       }
     }
 
@@ -272,8 +343,13 @@
 </head>
 <body>
 
-  <!-- Toggle Button -->
-  <button id="sidebarToggle" class="sidebar-toggle">
+  <!-- Mobile Toggle Button (only visible when sidebar is closed on mobile/tablet) -->
+  <button id="mobileToggle" class="mobile-toggle">
+    &#9776;
+  </button>
+
+  <!-- Fixed Hamburger Button (only visible when sidebar is collapsed on desktop) -->
+  <button id="hamburgerFixed" class="hamburger-fixed">
     &#9776;
   </button>
 
@@ -284,6 +360,9 @@
     <div class="row" id="layoutRow">
       <!-- Sidebar Navigation -->
       <nav id="sidebar" class="sidebar">
+        <button class="hamburger-btn" id="hamburgerBtn">
+          &#9776;
+        </button>
         <a href="#work-experience">Work Experience</a>
         <a href="#education">Education</a>
         <a href="#projects">Projects</a>
@@ -422,7 +501,9 @@
   </div>
 
 <script>
-  const toggleBtn = document.getElementById('sidebarToggle');
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const hamburgerFixed = document.getElementById('hamburgerFixed');
+  const mobileToggle = document.getElementById('mobileToggle');
   const sidebar = document.getElementById('sidebar');
   const mainContent = document.getElementById('mainContent');
   const overlay = document.getElementById('sidebarOverlay');
@@ -442,29 +523,38 @@
     return window.innerWidth < 768;
   }
 
-  // Toggle sidebar function
-  function toggleSidebar() {
+  // Desktop hamburger button functionality
+  function toggleDesktopSidebar() {
     if (isDesktop()) {
-      // On desktop, sidebar is always visible
-      return;
-    }
-
-    const isOpen = sidebar.classList.contains('open');
-    
-    if (isOpen) {
-      // Close sidebar
-      sidebar.classList.remove('open');
-      overlay.classList.remove('active');
-      if (isTablet()) {
-        mainContent.classList.remove('sidebar-open');
+      sidebar.classList.toggle('collapsed');
+      mainContent.classList.toggle('sidebar-collapsed');
+      
+      // Toggle fixed hamburger button visibility
+      if (sidebar.classList.contains('collapsed')) {
+        hamburgerFixed.classList.add('show');
+      } else {
+        hamburgerFixed.classList.remove('show');
       }
-    } else {
-      // Open sidebar
-      sidebar.classList.add('open');
-      if (isMobile()) {
-        overlay.classList.add('active');
-      } else if (isTablet()) {
-        mainContent.classList.add('sidebar-open');
+    }
+  }
+
+  // Mobile/tablet sidebar functionality
+  function toggleMobileSidebar() {
+    if (!isDesktop()) {
+      const isOpen = sidebar.classList.contains('open');
+      
+      if (isOpen) {
+        // Close sidebar
+        closeSidebar();
+      } else {
+        // Open sidebar
+        sidebar.classList.add('open');
+        mobileToggle.classList.add('hidden');
+        if (isMobile()) {
+          overlay.classList.add('active');
+        } else if (isTablet()) {
+          mainContent.classList.add('sidebar-open');
+        }
       }
     }
   }
@@ -473,6 +563,7 @@
   function closeSidebar() {
     sidebar.classList.remove('open');
     overlay.classList.remove('active');
+    mobileToggle.classList.remove('hidden');
     if (isTablet()) {
       mainContent.classList.remove('sidebar-open');
     }
@@ -481,15 +572,27 @@
   // Handle window resize
   function handleResize() {
     if (isDesktop()) {
-      // On desktop, ensure sidebar is always visible and remove mobile/tablet classes
+      // On desktop, ensure mobile/tablet classes are removed
       sidebar.classList.remove('open');
       overlay.classList.remove('active');
       mainContent.classList.remove('sidebar-open');
+      mobileToggle.classList.remove('hidden');
+      
+      // Handle fixed hamburger button state
+      if (sidebar.classList.contains('collapsed')) {
+        hamburgerFixed.classList.add('show');
+      } else {
+        hamburgerFixed.classList.remove('show');
+      }
     } else {
-      // On mobile/tablet, ensure sidebar is hidden by default
+      // On mobile/tablet, ensure desktop classes are removed and sidebar is hidden by default
+      sidebar.classList.remove('collapsed');
       sidebar.classList.remove('open');
       overlay.classList.remove('active');
+      mainContent.classList.remove('sidebar-collapsed');
       mainContent.classList.remove('sidebar-open');
+      mobileToggle.classList.remove('hidden');
+      hamburgerFixed.classList.remove('show');
     }
   }
 
@@ -501,7 +604,17 @@
   }
 
   // Event listeners
-  toggleBtn.addEventListener('click', toggleSidebar);
+  hamburgerBtn.addEventListener('click', () => {
+    if (isDesktop()) {
+      toggleDesktopSidebar();
+    } else {
+      closeSidebar(); // On mobile/tablet, hamburger button inside sidebar closes it
+    }
+  });
+
+  hamburgerFixed.addEventListener('click', toggleDesktopSidebar);
+  
+  mobileToggle.addEventListener('click', toggleMobileSidebar);
   overlay.addEventListener('click', closeSidebar);
   sidebar.addEventListener('click', handleNavClick);
   window.addEventListener('resize', handleResize);
