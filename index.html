@@ -73,34 +73,168 @@
         overflow-x: hidden;
       }
     }
-    main {
-      margin-left: 220px; /* same as sidebar width */
-    }
+
+    /* Sidebar Responsive Styles */
     .sidebar {
       margin: 0;
       padding: 0;
       background-color: #053c8f;
       min-height: 100vh;
-
       position: fixed;
       left: 0;
       top: 0;
       overflow-y: auto;
       color: white;
-
       transition: all 0.3s ease-in-out;
+      z-index: 1050;
+      width: 220px;
     }
+
     .sidebar a {
       color: #f2f5f8;
       font-weight: bold;
       display: block;
       padding: 0.8rem;
       text-decoration: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
+
     .sidebar a:hover {
       background-color: #cce0ff;
       color: #053c8f;
     }
+
+    /* Toggle Button */
+    .sidebar-toggle {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 1060;
+      background-color: #0f62fe;
+      color: white;
+      border: none;
+      padding: 10px 12px;
+      border-radius: 5px;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .sidebar-toggle:hover {
+      background-color: #004080;
+      transform: translateY(-1px);
+    }
+
+    /* Overlay for mobile */
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1040;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Main content adjustments */
+    main {
+      transition: margin-left 0.3s ease-in-out;
+    }
+
+    /* Desktop: ≥1200px */
+    @media (min-width: 1200px) {
+      .sidebar-toggle {
+        display: none;
+      }
+      
+      main {
+        margin-left: 220px;
+      }
+      
+      .sidebar {
+        transform: translateX(0);
+      }
+    }
+
+    /* Tablet: 768px - 1199px */
+    @media (min-width: 768px) and (max-width: 1199px) {
+      .sidebar {
+        width: 200px;
+        transform: translateX(-200px);
+      }
+      
+      .sidebar.open {
+        transform: translateX(0);
+      }
+      
+      main {
+        margin-left: 0;
+      }
+      
+      main.sidebar-open {
+        margin-left: 200px;
+      }
+    }
+
+    /* Mobile: ≤767px */
+    @media (max-width: 767px) {
+      .sidebar {
+        width: 280px;
+        transform: translateX(-280px);
+      }
+      
+      .sidebar.open {
+        transform: translateX(0);
+      }
+      
+      main {
+        margin-left: 0;
+      }
+      
+      .profile-pic {
+        width: 180px;
+        height: 180px;
+      }
+      
+      header h1 {
+        font-size: 2rem;
+      }
+      
+      .container {
+        padding: 1rem;
+      }
+    }
+
+    /* Small mobile: ≤480px */
+    @media (max-width: 480px) {
+      .sidebar {
+        width: 100%;
+        transform: translateX(-100%);
+      }
+      
+      .profile-pic {
+        width: 150px;
+        height: 150px;
+      }
+      
+      header h1 {
+        font-size: 1.8rem;
+      }
+      
+      .container {
+        padding: 0.5rem;
+      }
+    }
+
     .section-title {
       color: #0f62fe;
       margin-top: 2rem;
@@ -134,25 +268,22 @@
     #layoutRow {
       flex-wrap: nowrap;
     }
-
-    /* When hidden */
-    .sidebar.hidden {
-      display: none;
-    }
-
   </style>
 </head>
 <body>
 
   <!-- Toggle Button -->
-  <button id="toggleSidebar" class="btn btn-outline-primary d-md-none m-3">
+  <button id="sidebarToggle" class="sidebar-toggle">
     &#9776;
   </button>
+
+  <!-- Sidebar Overlay -->
+  <div id="sidebarOverlay" class="sidebar-overlay"></div>
 
   <div class="scroll-container">
     <div class="row" id="layoutRow">
       <!-- Sidebar Navigation -->
-      <nav class="sidebar" style="width: 220px;">
+      <nav id="sidebar" class="sidebar">
         <a href="#work-experience">Work Experience</a>
         <a href="#education">Education</a>
         <a href="#projects">Projects</a>
@@ -161,7 +292,7 @@
 
       <!-- Main Content -->
        
-      <main class="flex-grow-1 px-0">
+      <main id="mainContent" class="flex-grow-1 px-0">
       <header class="text-center py-4 m-0">
           <img src="images/petar_profile_picture.jpeg" alt="Petar Tesic" class="profile-pic">
           <h1>Petar Tešić</h1>
@@ -223,12 +354,12 @@
                   <li style="margin-left: 40px;">October 2024 – Present</li>
                   <li style="margin-left: 40px;">Grade: 10.0/10.0</li>
                   <li style="margin-left: 40px;">Some of chosen majors: Advanced Topics in Computer Networks, Advanced Topics in Compiler Construction, Advanced Topics In Software Verification, Machine Learning in Computer Vision.</li>
-          <strong>Master’s Degree</strong> in Informatics at the <strong>Faculty of Mathematics, University of Belgrade</strong>
+          <strong>Master's Degree</strong> in Informatics at the <strong>Faculty of Mathematics, University of Belgrade</strong>
                   <li style="margin-left: 40px;">October 2022 – September 2024</li>
                   <li style="margin-left: 40px;">Grade: 9.71/10.0</li>
                   <li style="margin-left: 40px;">Master thesis title: <strong>Automatic detection and optimization of the CRC algorithm within the LLVM compiler infrastructure</strong></li>
                   <li style="margin-left: 40px;">Some of chosen majors: Software Verification, Software Development 2, Scientific Computing, Machine Learning, Cryptography.</li> 
-          <strong>Bachelor’s Degree</strong> in Computer Science at the <strong>Faculty of Mathematics, University of Belgrade</strong>
+          <strong>Bachelor's Degree</strong> in Computer Science at the <strong>Faculty of Mathematics, University of Belgrade</strong>
                   <li style="margin-left: 40px;">October 2018 – September 2022</li>
                   <li style="margin-left: 40px;">Grade: 9.25/10.0</li>
                   <li style="margin-left: 40px;">Some of mandatory majors: Operating Systems, Computer Architecture, Database Programming, Computer Networks.</li>
@@ -291,12 +422,92 @@
   </div>
 
 <script>
-  const toggleBtn = document.getElementById('toggleSidebar');
+  const toggleBtn = document.getElementById('sidebarToggle');
   const sidebar = document.getElementById('sidebar');
+  const mainContent = document.getElementById('mainContent');
+  const overlay = document.getElementById('sidebarOverlay');
 
-  toggleBtn.addEventListener('click', () => {
-    sidebar.classList.toggle('hidden');
-  });
+  // Function to check if we're on desktop
+  function isDesktop() {
+    return window.innerWidth >= 1200;
+  }
+
+  // Function to check if we're on tablet
+  function isTablet() {
+    return window.innerWidth >= 768 && window.innerWidth < 1200;
+  }
+
+  // Function to check if we're on mobile
+  function isMobile() {
+    return window.innerWidth < 768;
+  }
+
+  // Toggle sidebar function
+  function toggleSidebar() {
+    if (isDesktop()) {
+      // On desktop, sidebar is always visible
+      return;
+    }
+
+    const isOpen = sidebar.classList.contains('open');
+    
+    if (isOpen) {
+      // Close sidebar
+      sidebar.classList.remove('open');
+      overlay.classList.remove('active');
+      if (isTablet()) {
+        mainContent.classList.remove('sidebar-open');
+      }
+    } else {
+      // Open sidebar
+      sidebar.classList.add('open');
+      if (isMobile()) {
+        overlay.classList.add('active');
+      } else if (isTablet()) {
+        mainContent.classList.add('sidebar-open');
+      }
+    }
+  }
+
+  // Close sidebar when clicking overlay
+  function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    if (isTablet()) {
+      mainContent.classList.remove('sidebar-open');
+    }
+  }
+
+  // Handle window resize
+  function handleResize() {
+    if (isDesktop()) {
+      // On desktop, ensure sidebar is always visible and remove mobile/tablet classes
+      sidebar.classList.remove('open');
+      overlay.classList.remove('active');
+      mainContent.classList.remove('sidebar-open');
+    } else {
+      // On mobile/tablet, ensure sidebar is hidden by default
+      sidebar.classList.remove('open');
+      overlay.classList.remove('active');
+      mainContent.classList.remove('sidebar-open');
+    }
+  }
+
+  // Close sidebar when clicking on navigation links (for mobile/tablet)
+  function handleNavClick(e) {
+    if (!isDesktop() && e.target.tagName === 'A') {
+      closeSidebar();
+    }
+  }
+
+  // Event listeners
+  toggleBtn.addEventListener('click', toggleSidebar);
+  overlay.addEventListener('click', closeSidebar);
+  sidebar.addEventListener('click', handleNavClick);
+  window.addEventListener('resize', handleResize);
+
+  // Initialize proper state on page load
+  handleResize();
 </script>
 
 </body>
