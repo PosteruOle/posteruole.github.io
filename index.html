@@ -122,6 +122,33 @@
       background-color: rgba(255, 255, 255, 0.1);
     }
 
+    /* Fixed hamburger button for when sidebar is collapsed on desktop */
+    .hamburger-fixed {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 1060;
+      background-color: #0f62fe;
+      color: white;
+      border: none;
+      padding: 10px 12px;
+      border-radius: 5px;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      display: none;
+    }
+
+    .hamburger-fixed:hover {
+      background-color: #004080;
+      transform: translateY(-1px);
+    }
+
+    .hamburger-fixed.show {
+      display: block;
+    }
+
     /* Mobile toggle button - only show when sidebar is closed */
     .mobile-toggle {
       position: fixed;
@@ -321,6 +348,11 @@
     &#9776;
   </button>
 
+  <!-- Fixed Hamburger Button (only visible when sidebar is collapsed on desktop) -->
+  <button id="hamburgerFixed" class="hamburger-fixed">
+    &#9776;
+  </button>
+
   <!-- Sidebar Overlay -->
   <div id="sidebarOverlay" class="sidebar-overlay"></div>
 
@@ -470,6 +502,7 @@
 
 <script>
   const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const hamburgerFixed = document.getElementById('hamburgerFixed');
   const mobileToggle = document.getElementById('mobileToggle');
   const sidebar = document.getElementById('sidebar');
   const mainContent = document.getElementById('mainContent');
@@ -495,6 +528,13 @@
     if (isDesktop()) {
       sidebar.classList.toggle('collapsed');
       mainContent.classList.toggle('sidebar-collapsed');
+      
+      // Toggle fixed hamburger button visibility
+      if (sidebar.classList.contains('collapsed')) {
+        hamburgerFixed.classList.add('show');
+      } else {
+        hamburgerFixed.classList.remove('show');
+      }
     }
   }
 
@@ -537,6 +577,13 @@
       overlay.classList.remove('active');
       mainContent.classList.remove('sidebar-open');
       mobileToggle.classList.remove('hidden');
+      
+      // Handle fixed hamburger button state
+      if (sidebar.classList.contains('collapsed')) {
+        hamburgerFixed.classList.add('show');
+      } else {
+        hamburgerFixed.classList.remove('show');
+      }
     } else {
       // On mobile/tablet, ensure desktop classes are removed and sidebar is hidden by default
       sidebar.classList.remove('collapsed');
@@ -545,6 +592,7 @@
       mainContent.classList.remove('sidebar-collapsed');
       mainContent.classList.remove('sidebar-open');
       mobileToggle.classList.remove('hidden');
+      hamburgerFixed.classList.remove('show');
     }
   }
 
@@ -564,6 +612,8 @@
     }
   });
 
+  hamburgerFixed.addEventListener('click', toggleDesktopSidebar);
+  
   mobileToggle.addEventListener('click', toggleMobileSidebar);
   overlay.addEventListener('click', closeSidebar);
   sidebar.addEventListener('click', handleNavClick);
