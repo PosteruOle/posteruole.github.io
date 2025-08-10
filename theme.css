@@ -1,0 +1,113 @@
+/* Global theme toggle button */
+.theme-toggle {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  z-index: 2000;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.1);
+  background: #ffffffcc;
+  color: #111;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.theme-toggle:hover {
+  transform: translateY(-2px);
+}
+
+/* Dark icon state */
+[data-theme="dark"] .theme-toggle {
+  background: #1e1e1e;
+  color: #f5f5f5;
+  border-color: rgba(255,255,255,0.2);
+}
+
+/* Base dark theme overrides */
+:root {
+  --brand: #0f62fe;
+  --brand-muted: #93b7ff;
+}
+
+/* General */
+[data-theme="dark"] body {
+  background-color: #121212 !important;
+  color: #e6e6e6 !important;
+}
+
+[data-theme="dark"] a { color: #8bb4ff !important; }
+[data-theme="dark"] a:hover { color: #c1d6ff !important; }
+
+/* Containers and cards */
+[data-theme="dark"] .container,
+[data-theme="dark"] .results,
+[data-theme="dark"] form,
+[data-theme="dark"] .section {
+  background-color: #1c1c1c !important;
+  color: #e6e6e6 !important;
+  box-shadow: none !important;
+}
+
+/* Headings */
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] .section-title {
+  color: var(--brand-muted) !important;
+}
+
+/* Header bar */
+[data-theme="dark"] header {
+  background-color: #0a3ea7 !important;
+  color: #ffffff !important;
+}
+
+/* Sidebar */
+[data-theme="dark"] .sidebar {
+  background-color: #0b2f6b !important;
+  color: #e6e6e6 !important;
+}
+[data-theme="dark"] .sidebar a { color: #e6f0ff !important; }
+[data-theme="dark"] .sidebar a:hover { background-color: #123e85 !important; color: #ffffff !important; }
+
+/* Buttons */
+[data-theme="dark"] button,
+[data-theme="dark"] .btn {
+  background-color: var(--brand) !important;
+  color: #ffffff !important;
+  border-color: var(--brand) !important;
+}
+[data-theme="dark"] button:hover,
+[data-theme="dark"] .btn:hover {
+  filter: brightness(1.05);
+}
+
+/* Inputs */
+[data-theme="dark"] input,
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+  background-color: #1e1e1e !important;
+  color: #f0f0f0 !important;
+  border-color: #3a3a3a !important;
+}
+
+/* Tables / cells (minesweeper) */
+[data-theme="dark"] table { color: #e6e6e6 !important; }
+[data-theme="dark"] td { background-color: #2a2a2a !important; border-color: #444 !important; color: #e6e6e6 !important; }
+[data-theme="dark"] td.revealed { background-color: #1a1a1a !important; }
+[data-theme="dark"] td.flagged { background-color: #665c00 !important; }
+
+/* Misc */
+[data-theme="dark"] .styled-hr { background-color: var(--brand) !important; }
+[data-theme="dark"] .icon { filter: brightness(0.9) contrast(1.1); }
+
+/* Battle field specific */
+[data-theme="dark"] .back { color: #8bb4ff !important; }
+
+/* Matrix page note: canvas draws its own; body already dark */
