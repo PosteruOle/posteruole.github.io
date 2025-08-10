@@ -33,9 +33,24 @@
     h3 {
       color: #0f62fe;
     }
-    h4 {
-      color: #0f62fe;
-    }
+         h4 {
+       color: #0f62fe;
+     }
+     /* Header text responsiveness */
+     header p {
+       margin: 0.5rem auto 0;
+       max-width: 90%;
+       line-height: 1.4;
+       word-break: keep-all;
+       overflow-wrap: anywhere;
+     }
+     .mobile-only { display: none; }
+     .mobile-sep { display: inline; }
+     @media (max-width: 480px) {
+       header p { font-size: 0.95rem; max-width: 95%; }
+       .mobile-only { display: inline; }
+       .mobile-sep { display: none; }
+     }
     .styled-hr {
       border: none;
       height: 2px;
@@ -405,7 +420,7 @@
       <header class="text-center py-4 m-0">
           <img src="images/petar_profile_picture.jpeg" alt="Petar Tesic" class="profile-pic">
           <h1>Petar Tešić</h1>
-          <p>Software Engineer @ Microsoft | PhD Student @ Faculty of Mathematics, University of Belgrade</p>
+          <p>Software Engineer @ Microsoft <span class="mobile-sep">|</span><br class="mobile-only" /> PhD Student @ Faculty of Mathematics, University of Belgrade</p>
   </header>  
         <div class="container">
         <section id="about" class="px-4">
