@@ -3,34 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Elektro-Maks | Električne instalacije</title>
+  <title>Elektro-Maks | Elektricne instalacije</title>
+  <meta name="description" content="Elektro-Maks - profesionalne elektricne instalacije, otklanjanje kvarova i modernizacija instalacija.">
   <style>
     :root {
-      --bg: #f4f6fb;
+      --bg: #f5f7fc;
       --surface: #ffffff;
-      --text: #1e2340;
-      --muted: #5a617f;
-      --primary: #1f2a7a;
-      --primary-soft: #e8ecff;
-      --border: #d9def2;
-      --success: #20734d;
-      --shadow: 0 10px 30px rgba(31, 42, 122, 0.12);
+      --text: #1f2644;
+      --muted: #626b8f;
+      --line: #dce2f6;
+      --primary: #1b2571;
+      --primary-soft: #ebefff;
+      --accent: #267f56;
+      --shadow: 0 12px 28px rgba(27, 37, 113, 0.12);
     }
 
     [data-theme="dark"] {
-      --bg: #0d1020;
-      --surface: #151a32;
-      --text: #edf0ff;
-      --muted: #b3bcdf;
-      --primary: #91a7ff;
-      --primary-soft: #1f2850;
-      --border: #2d3968;
-      --success: #76d5a8;
-      --shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+      --bg: #0c1022;
+      --surface: #161c35;
+      --text: #eaf0ff;
+      --muted: #aeb9df;
+      --line: #2f3c69;
+      --primary: #9ab0ff;
+      --primary-soft: #1f2a52;
+      --accent: #79d5ac;
+      --shadow: 0 14px 32px rgba(0, 0, 0, 0.45);
     }
 
     * {
       box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
@@ -42,141 +47,240 @@
       transition: background-color 0.25s ease, color 0.25s ease;
     }
 
-    .controls {
+    .floating-controls {
       position: fixed;
-      top: 16px;
-      right: 16px;
+      top: 14px;
+      right: 14px;
       display: flex;
       align-items: center;
-      gap: 12px;
-      z-index: 30;
+      gap: 10px;
+      z-index: 20;
     }
 
     .lang-select {
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--text);
+      min-width: 82px;
+      border: 1px solid var(--line);
       border-radius: 10px;
-      padding: 8px 10px;
-      font-weight: 600;
-      box-shadow: var(--shadow);
-    }
-
-    .theme-button {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border: 1px solid var(--border);
       background: var(--surface);
       color: var(--text);
-      border-radius: 999px;
-      padding: 6px 10px;
-      cursor: pointer;
+      font-weight: 700;
+      padding: 8px 10px;
       box-shadow: var(--shadow);
-      transition: transform 0.15s ease;
     }
 
-    .theme-button:hover {
-      transform: translateY(-1px);
+    .switch-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
     }
 
-    .switch-track {
-      width: 44px;
-      height: 24px;
-      border-radius: 999px;
-      background: var(--primary-soft);
+    .switch-text {
+      font-size: 0.73rem;
+      color: var(--muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .wall-switch {
+      border: none;
+      padding: 0;
+      background: transparent;
+      cursor: pointer;
+      line-height: 0;
+      filter: drop-shadow(0 7px 14px rgba(0, 0, 0, 0.24));
+    }
+
+    .plate {
+      width: 74px;
+      height: 122px;
+      border-radius: 12px;
+      background: linear-gradient(145deg, #fefefe, #dfe3ef);
+      border: 1px solid #c4cbdf;
       position: relative;
-      border: 1px solid var(--border);
+      display: grid;
+      place-items: center;
     }
 
-    .switch-thumb {
-      width: 18px;
-      height: 18px;
+    [data-theme="dark"] .plate {
+      background: linear-gradient(145deg, #f2f2f3, #c6ccd8);
+    }
+
+    .plate::before,
+    .plate::after {
+      content: "";
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
-      background: var(--primary);
+      background: #b7bfd7;
       position: absolute;
-      top: 2px;
-      left: 2px;
-      transition: transform 0.2s ease;
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.28);
     }
 
-    [data-theme="dark"] .switch-thumb {
-      transform: translateX(20px);
+    .plate::before {
+      top: 10px;
+    }
+
+    .plate::after {
+      bottom: 10px;
+    }
+
+    .rocker {
+      width: 48px;
+      height: 84px;
+      border-radius: 8px;
+      border: 1px solid #c4cbdf;
+      background: linear-gradient(to bottom, #ffffff, #d8deed);
+      position: relative;
+      transition: transform 0.22s ease;
+      transform: translateY(-4px);
+      box-shadow:
+        inset 0 6px 8px rgba(255, 255, 255, 0.7),
+        inset 0 -6px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .rocker::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 18px;
+      height: 2px;
+      background: #adb5cc;
+      border-radius: 3px;
+    }
+
+    [data-theme="dark"] .rocker {
+      transform: translateY(4px);
+      background: linear-gradient(to bottom, #ecf0fb, #c4ccdf);
+    }
+
+    .top-strip {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(8px);
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .top-strip nav {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 8px 18px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .top-strip a {
+      color: var(--muted);
+      text-decoration: none;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .top-strip a:hover {
+      color: var(--primary);
+      border-color: var(--primary);
     }
 
     header {
-      padding: 100px 20px 40px;
-      text-align: center;
+      padding: 36px 18px 12px;
     }
 
     .hero {
-      max-width: 980px;
+      max-width: 1060px;
       margin: 0 auto;
       background: var(--surface);
-      border: 1px solid var(--border);
+      border: 1px solid var(--line);
       border-radius: 18px;
-      padding: 20px 24px 30px;
       box-shadow: var(--shadow);
+      padding: 22px;
     }
 
     .logo {
-      width: min(520px, 100%);
+      display: block;
+      margin: 0 auto;
+      width: min(560px, 100%);
       height: auto;
     }
 
     .tagline {
-      margin: 8px auto 0;
       max-width: 760px;
+      margin: 10px auto 0;
+      text-align: center;
       color: var(--muted);
-      font-size: 1.05rem;
+      font-size: 1.06rem;
     }
 
-    .cta-row {
+    .hero-actions {
+      margin-top: 18px;
       display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
+      gap: 10px;
       justify-content: center;
-      margin-top: 20px;
+      flex-wrap: wrap;
     }
 
     .btn {
       text-decoration: none;
-      padding: 10px 16px;
       border-radius: 10px;
+      padding: 10px 14px;
       font-weight: 700;
       border: 1px solid transparent;
-      transition: opacity 0.2s ease;
     }
 
     .btn-primary {
       background: var(--primary);
-      color: #fff;
+      color: #ffffff;
     }
 
-    .btn-secondary {
-      border-color: var(--border);
+    .btn-outline {
+      border-color: var(--line);
       color: var(--text);
       background: transparent;
     }
 
-    .btn:hover {
-      opacity: 0.9;
+    .stats {
+      margin-top: 16px;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      border: 1px solid var(--line);
+      background: var(--primary-soft);
+      color: var(--primary);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-weight: 700;
+      font-size: 0.88rem;
     }
 
     main {
-      max-width: 1050px;
-      margin: 24px auto 48px;
-      padding: 0 20px;
+      max-width: 1060px;
+      margin: 18px auto 38px;
+      padding: 0 18px;
       display: grid;
-      gap: 18px;
+      gap: 16px;
     }
 
     section {
       background: var(--surface);
-      border: 1px solid var(--border);
+      border: 1px solid var(--line);
       border-radius: 16px;
-      padding: 22px;
       box-shadow: var(--shadow);
+      padding: 20px;
     }
 
     h2 {
@@ -184,139 +288,336 @@
       color: var(--primary);
     }
 
-    ul {
-      padding-left: 20px;
-      margin: 8px 0 0;
-    }
-
-    .grid {
+    .columns {
       display: grid;
+      gap: 14px;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
     }
 
-    .contact {
+    .service-list {
       display: grid;
-      gap: 6px;
-      font-weight: 600;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .service-item {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 9px 10px;
+      background: color-mix(in srgb, var(--surface) 92%, var(--primary-soft));
+    }
+
+    .timeline {
+      margin: 8px 0 0;
+      padding-left: 20px;
     }
 
     .notice {
-      color: var(--success);
+      margin-top: 10px;
+      color: var(--accent);
       font-weight: 700;
+    }
+
+    .estimator-form {
+      display: grid;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .field {
+      display: grid;
+      gap: 5px;
+    }
+
+    label {
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface);
+      color: var(--text);
+      font: inherit;
+      padding: 10px;
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .check {
+      display: flex;
+      gap: 9px;
+      align-items: center;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .check input {
+      width: auto;
+      margin: 0;
+    }
+
+    .result-box {
+      border: 1px dashed var(--line);
+      border-radius: 10px;
+      padding: 12px;
+      background: var(--primary-soft);
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .contact-grid {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .contact-grid a {
+      text-decoration: none;
+      color: var(--text);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 8px 10px;
+      background: color-mix(in srgb, var(--surface) 92%, var(--primary-soft));
+    }
+
+    .faq {
+      display: grid;
+      gap: 8px;
+    }
+
+    details {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 9px 11px;
+      background: color-mix(in srgb, var(--surface) 92%, var(--primary-soft));
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 700;
+      color: var(--text);
     }
 
     footer {
       text-align: center;
-      padding: 0 20px 30px;
       color: var(--muted);
-      font-size: 0.95rem;
+      font-size: 0.9rem;
+      padding: 2px 18px 26px;
     }
 
-    @media (max-width: 760px) {
-      .controls {
-        top: 12px;
-        right: 12px;
-        gap: 8px;
+    @media (max-width: 860px) {
+      .columns {
+        grid-template-columns: 1fr;
       }
 
-      .theme-label {
+      .floating-controls {
+        top: 10px;
+        right: 10px;
+      }
+
+      .switch-text {
         display: none;
       }
 
-      header {
-        padding-top: 86px;
+      .top-strip nav {
+        padding-right: 104px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .plate {
+        width: 62px;
+        height: 103px;
       }
 
-      .grid {
-        grid-template-columns: 1fr;
+      .rocker {
+        width: 40px;
+        height: 70px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="controls">
-    <select id="langSelect" class="lang-select" aria-label="Jezik">
+  <div class="floating-controls">
+    <select id="langSelect" class="lang-select" aria-label="Jezik sajta">
       <option value="sr">SR</option>
       <option value="en">EN</option>
       <option value="de">DE</option>
     </select>
 
-    <button id="themeToggle" class="theme-button" type="button" aria-label="Promeni temu">
-      <span id="themeLabel" class="theme-label">Svetlo</span>
-      <span class="switch-track"><span class="switch-thumb"></span></span>
-    </button>
+    <div class="switch-wrapper">
+      <span id="themeText" class="switch-text" data-i18n="themeLight">Svetlo</span>
+      <button id="wallSwitch" class="wall-switch" type="button" aria-label="Promeni temu" aria-pressed="false">
+        <span class="plate">
+          <span class="rocker"></span>
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <div class="top-strip">
+    <nav>
+      <a href="#o-nama" data-i18n="navAbout">O nama</a>
+      <a href="#usluge" data-i18n="navServices">Usluge</a>
+      <a href="#proces" data-i18n="navProcess">Proces</a>
+      <a href="#procena" data-i18n="navEstimator">Brza procena</a>
+      <a href="#kontakt" data-i18n="navContact">Kontakt</a>
+      <a href="#faq" data-i18n="navFaq">FAQ</a>
+    </nav>
   </div>
 
   <header>
     <div class="hero">
       <img src="images/elektro-maks-logo.svg" alt="Elektro-Maks logo" class="logo">
       <p class="tagline" data-i18n="tagline">
-        Profesionalne električne instalacije za domove, stanove, poslovne objekte i industrijske sisteme.
+        Profesionalne elektricne instalacije za domove, stanove, poslovne objekte i industrijske sisteme.
       </p>
-      <div class="cta-row">
-        <a class="btn btn-primary" href="#kontakt" data-i18n="ctaContact">Zakažite izlazak na teren</a>
-        <a class="btn btn-secondary" href="#usluge" data-i18n="ctaServices">Pogledajte usluge</a>
+
+      <div class="hero-actions">
+        <a href="#kontakt" class="btn btn-primary" data-i18n="ctaPrimary">Zakazite izlazak na teren</a>
+        <a href="#procena" class="btn btn-outline" data-i18n="ctaSecondary">Brza online procena</a>
+      </div>
+
+      <div class="stats">
+        <span class="chip" data-i18n="chip1">Standardi bezbednosti na prvom mestu</span>
+        <span class="chip" data-i18n="chip2">Pouzdan dolazak u dogovorenom terminu</span>
+        <span class="chip" data-i18n="chip3">Rad u stambenim i poslovnim objektima</span>
       </div>
     </div>
   </header>
 
   <main>
     <section id="o-nama">
-      <h2 data-i18n="aboutTitle">O nama</h2>
+      <h2 data-i18n="aboutTitle">O firmi</h2>
       <p data-i18n="aboutText">
-        Elektro-Maks je lokalna firma koju vodi Stefan Maksimović, električar sa iskustvom u izvođenju
-        i održavanju svih vrsta elektroinstalacija. Fokus nam je bezbedna, precizna i dugotrajna izvedba
-        radova, uz poštovanje dogovorenih rokova.
+        Elektro-Maks vodi Stefan Maksimovic, elektricar sa prakticnim iskustvom u izvodjenju i odrzavanju
+        elektroinstalacija. Fokus je na cistom radu, pouzdanoj izvedbi i jasnoj komunikaciji od prvog poziva
+        do zavrsne provere instalacije.
       </p>
     </section>
 
-    <div class="grid">
+    <div class="columns">
       <section id="usluge">
         <h2 data-i18n="servicesTitle">Usluge</h2>
-        <ul>
-          <li data-i18n="service1">Kompletne instalacije u novogradnji i adaptaciji</li>
-          <li data-i18n="service2">Zamena starih elektroinstalacija i razvodnih tabli</li>
-          <li data-i18n="service3">Montaža rasvete, utičnica, prekidača i osigurača</li>
-          <li data-i18n="service4">Detekcija i otklanjanje kvarova</li>
-          <li data-i18n="service5">Uzemljenje i zaštita instalacija</li>
-        </ul>
+        <div class="service-list">
+          <div class="service-item" data-i18n="service1">Kompletne instalacije u novogradnji i adaptaciji</div>
+          <div class="service-item" data-i18n="service2">Zamena starih instalacija i razvodnih tabli</div>
+          <div class="service-item" data-i18n="service3">MontaZa rasvete, uticnica, prekidaca i osiguraca</div>
+          <div class="service-item" data-i18n="service4">Detekcija i otklanjanje kvarova</div>
+          <div class="service-item" data-i18n="service5">Uzemljenje i zastita instalacija</div>
+        </div>
       </section>
 
       <section>
-        <h2 data-i18n="whyTitle">Zašto Elektro-Maks</h2>
-        <ul>
-          <li data-i18n="why1">Kvalitetni materijali i proverena oprema</li>
-          <li data-i18n="why2">Profesionalan pristup i jasna komunikacija</li>
-          <li data-i18n="why3">Brz izlazak na teren po dogovoru</li>
-          <li data-i18n="why4">Poštovanje bezbednosnih standarda</li>
-        </ul>
+        <h2 data-i18n="whyTitle">Zasto Elektro-Maks</h2>
+        <div class="service-list">
+          <div class="service-item" data-i18n="why1">Kvalitetni materijali i proverena oprema</div>
+          <div class="service-item" data-i18n="why2">Profesionalan pristup i postovanje rokova</div>
+          <div class="service-item" data-i18n="why3">Brz izlazak na teren po dogovoru</div>
+          <div class="service-item" data-i18n="why4">Postovanje bezbednosnih standarda</div>
+        </div>
       </section>
     </div>
 
-    <section>
+    <section id="proces">
       <h2 data-i18n="processTitle">Kako radimo</h2>
-      <ol>
-        <li data-i18n="process1">Kratke konsultacije i procena na licu mesta.</li>
-        <li data-i18n="process2">Predlog rešenja i dogovor oko obima radova.</li>
-        <li data-i18n="process3">Izvođenje instalacija i završna provera sistema.</li>
+      <ol class="timeline">
+        <li data-i18n="process1">Konsultacije i procena na licu mesta.</li>
+        <li data-i18n="process2">Predlog resenja i precizan dogovor radova.</li>
+        <li data-i18n="process3">Izvodjenje, testiranje i predaja sistema.</li>
       </ol>
-      <p class="notice" data-i18n="processNotice">Pouzdan partner za struju u vašem domu i firmi.</p>
+      <p class="notice" data-i18n="processNotice">Pouzdan partner za struju u vasem domu i firmi.</p>
     </section>
 
-    <section id="kontakt">
-      <h2 data-i18n="contactTitle">Kontakt</h2>
-      <div class="contact">
-        <span data-i18n="contactName">Elektro-Maks, Stefan Maksimović</span>
-        <span data-i18n="contactPhone">Telefon: +381 6X XXX XX XX</span>
-        <span data-i18n="contactEmail">E-mail: kontakt@elektro-maks.rs</span>
-        <span data-i18n="contactCity">Lokacija: Srbija</span>
+    <div class="columns">
+      <section id="procena">
+        <h2 data-i18n="estimatorTitle">Brza procena cene</h2>
+        <p data-i18n="estimatorText">Ova procena je informativna. Tacna cena se definise nakon izlaska na teren.</p>
+
+        <form id="estimatorForm" class="estimator-form">
+          <div class="field">
+            <label for="serviceType" data-i18n="labelService">Tip usluge</label>
+            <select id="serviceType">
+              <option value="new" data-i18n="estServiceNew">Nova instalacija</option>
+              <option value="replace" data-i18n="estServiceReplace">Zamena postojecih instalacija</option>
+              <option value="lighting" data-i18n="estServiceLighting">Rasveta i prekidaci</option>
+              <option value="fault" data-i18n="estServiceFault">Otklanjanje kvara</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="area" data-i18n="labelArea">Povrsina objekta (m2)</label>
+            <input id="area" type="number" min="1" max="2000" value="60">
+          </div>
+
+          <label class="check">
+            <input id="urgent" type="checkbox">
+            <span data-i18n="labelUrgent">Hitna intervencija (+25%)</span>
+          </label>
+
+          <button class="btn btn-primary" type="submit" data-i18n="estimateButton">Izracunaj procenu</button>
+          <div id="estimateResult" class="result-box" data-i18n="estimateDefault">
+            Unesite podatke i kliknite na "Izracunaj procenu".
+          </div>
+        </form>
+      </section>
+
+      <section id="kontakt">
+        <h2 data-i18n="contactTitle">Kontakt</h2>
+        <div class="contact-grid">
+          <a href="tel:+381600000000" data-i18n="contactPhone">Telefon: +381 60 000 0000</a>
+          <a href="mailto:kontakt@elektro-maks.rs" data-i18n="contactEmail">E-mail: kontakt@elektro-maks.rs</a>
+          <a href="https://maps.google.com/?q=Belgrade+Serbia" target="_blank" rel="noreferrer" data-i18n="contactLocation">Lokacija: Beograd, Srbija</a>
+        </div>
+
+        <form id="contactForm" class="estimator-form">
+          <div class="field">
+            <label for="name" data-i18n="labelName">Ime i prezime</label>
+            <input id="name" type="text" data-i18n-placeholder="placeholderName" placeholder="Vase ime">
+          </div>
+          <div class="field">
+            <label for="phone" data-i18n="labelPhone">Broj telefona</label>
+            <input id="phone" type="text" data-i18n-placeholder="placeholderPhone" placeholder="+381...">
+          </div>
+          <div class="field">
+            <label for="message" data-i18n="labelMessage">Opis radova</label>
+            <textarea id="message" data-i18n-placeholder="placeholderMessage" placeholder="Kratko opisite sta vam je potrebno"></textarea>
+          </div>
+          <button type="submit" class="btn btn-outline" data-i18n="contactButton">Pripremi e-mail upit</button>
+        </form>
+      </section>
+    </div>
+
+    <section id="faq">
+      <h2 data-i18n="faqTitle">Cesta pitanja</h2>
+      <div class="faq">
+        <details>
+          <summary data-i18n="faqQ1">Da li izlazite na teren vikendom?</summary>
+          <p data-i18n="faqA1">Po dogovoru, vikendom su moguce hitne intervencije.</p>
+        </details>
+        <details>
+          <summary data-i18n="faqQ2">Da li radite samo stanove i kuce?</summary>
+          <p data-i18n="faqA2">Ne. Elektro-Maks radi i poslovne prostore i manje industrijske objekte.</p>
+        </details>
+        <details>
+          <summary data-i18n="faqQ3">Da li dajete garanciju na izvedene radove?</summary>
+          <p data-i18n="faqA3">Da, za izvedene radove i ugradjene komponente po dogovorenim uslovima.</p>
+        </details>
       </div>
     </section>
   </main>
 
   <footer data-i18n="footerText">
-    © Elektro-Maks. Sva prava zadržana.
+    © Elektro-Maks. Sva prava zadrzana.
   </footer>
 
   <script>
@@ -325,103 +626,250 @@
 
     const translations = {
       sr: {
+        navAbout: "O nama",
+        navServices: "Usluge",
+        navProcess: "Proces",
+        navEstimator: "Brza procena",
+        navContact: "Kontakt",
+        navFaq: "FAQ",
         themeLight: "Svetlo",
         themeDark: "Tamno",
-        tagline: "Profesionalne električne instalacije za domove, stanove, poslovne objekte i industrijske sisteme.",
-        ctaContact: "Zakažite izlazak na teren",
-        ctaServices: "Pogledajte usluge",
-        aboutTitle: "O nama",
-        aboutText: "Elektro-Maks je lokalna firma koju vodi Stefan Maksimović, električar sa iskustvom u izvođenju i održavanju svih vrsta elektroinstalacija. Fokus nam je bezbedna, precizna i dugotrajna izvedba radova, uz poštovanje dogovorenih rokova.",
+        tagline: "Profesionalne elektricne instalacije za domove, stanove, poslovne objekte i industrijske sisteme.",
+        ctaPrimary: "Zakazite izlazak na teren",
+        ctaSecondary: "Brza online procena",
+        chip1: "Standardi bezbednosti na prvom mestu",
+        chip2: "Pouzdan dolazak u dogovorenom terminu",
+        chip3: "Rad u stambenim i poslovnim objektima",
+        aboutTitle: "O firmi",
+        aboutText: "Elektro-Maks vodi Stefan Maksimovic, elektricar sa prakticnim iskustvom u izvodjenju i odrzavanju elektroinstalacija. Fokus je na cistom radu, pouzdanoj izvedbi i jasnoj komunikaciji od prvog poziva do zavrsne provere instalacije.",
         servicesTitle: "Usluge",
         service1: "Kompletne instalacije u novogradnji i adaptaciji",
-        service2: "Zamena starih elektroinstalacija i razvodnih tabli",
-        service3: "Montaža rasvete, utičnica, prekidača i osigurača",
+        service2: "Zamena starih instalacija i razvodnih tabli",
+        service3: "Montaza rasvete, uticnica, prekidaca i osiguraca",
         service4: "Detekcija i otklanjanje kvarova",
-        service5: "Uzemljenje i zaštita instalacija",
-        whyTitle: "Zašto Elektro-Maks",
+        service5: "Uzemljenje i zastita instalacija",
+        whyTitle: "Zasto Elektro-Maks",
         why1: "Kvalitetni materijali i proverena oprema",
-        why2: "Profesionalan pristup i jasna komunikacija",
+        why2: "Profesionalan pristup i postovanje rokova",
         why3: "Brz izlazak na teren po dogovoru",
-        why4: "Poštovanje bezbednosnih standarda",
+        why4: "Postovanje bezbednosnih standarda",
         processTitle: "Kako radimo",
-        process1: "Kratke konsultacije i procena na licu mesta.",
-        process2: "Predlog rešenja i dogovor oko obima radova.",
-        process3: "Izvođenje instalacija i završna provera sistema.",
-        processNotice: "Pouzdan partner za struju u vašem domu i firmi.",
+        process1: "Konsultacije i procena na licu mesta.",
+        process2: "Predlog resenja i precizan dogovor radova.",
+        process3: "Izvodjenje, testiranje i predaja sistema.",
+        processNotice: "Pouzdan partner za struju u vasem domu i firmi.",
+        estimatorTitle: "Brza procena cene",
+        estimatorText: "Ova procena je informativna. Tacna cena se definise nakon izlaska na teren.",
+        labelService: "Tip usluge",
+        labelArea: "Povrsina objekta (m2)",
+        labelUrgent: "Hitna intervencija (+25%)",
+        estimateButton: "Izracunaj procenu",
+        estimateDefault: "Unesite podatke i kliknite na \"Izracunaj procenu\".",
+        estimateRange: "Procenjeni opseg: {low} - {high} RSD.",
+        estimateFaultRange: "Procenjeni opseg intervencije: {low} - {high} RSD.",
+        estServiceNew: "Nova instalacija",
+        estServiceReplace: "Zamena postojecih instalacija",
+        estServiceLighting: "Rasveta i prekidaci",
+        estServiceFault: "Otklanjanje kvara",
         contactTitle: "Kontakt",
-        contactName: "Elektro-Maks, Stefan Maksimović",
-        contactPhone: "Telefon: +381 6X XXX XX XX",
+        contactPhone: "Telefon: +381 60 000 0000",
         contactEmail: "E-mail: kontakt@elektro-maks.rs",
-        contactCity: "Lokacija: Srbija",
-        footerText: "© Elektro-Maks. Sva prava zadržana."
+        contactLocation: "Lokacija: Beograd, Srbija",
+        labelName: "Ime i prezime",
+        labelPhone: "Broj telefona",
+        labelMessage: "Opis radova",
+        placeholderName: "Vase ime",
+        placeholderPhone: "+381...",
+        placeholderMessage: "Kratko opisite sta vam je potrebno",
+        contactButton: "Pripremi e-mail upit",
+        contactError: "Molimo unesite ime, telefon i opis radova.",
+        contactMailSubject: "Upit za elektro usluge",
+        contactPrepared: "E-mail upit je pripremljen.",
+        faqTitle: "Cesta pitanja",
+        faqQ1: "Da li izlazite na teren vikendom?",
+        faqA1: "Po dogovoru, vikendom su moguce hitne intervencije.",
+        faqQ2: "Da li radite samo stanove i kuce?",
+        faqA2: "Ne. Elektro-Maks radi i poslovne prostore i manje industrijske objekte.",
+        faqQ3: "Da li dajete garanciju na izvedene radove?",
+        faqA3: "Da, za izvedene radove i ugradjene komponente po dogovorenim uslovima.",
+        footerText: "© Elektro-Maks. Sva prava zadrzana."
       },
       en: {
+        navAbout: "About",
+        navServices: "Services",
+        navProcess: "Process",
+        navEstimator: "Quick estimate",
+        navContact: "Contact",
+        navFaq: "FAQ",
         themeLight: "Light",
         themeDark: "Dark",
-        tagline: "Professional electrical installations for homes, apartments, offices, and industrial systems.",
-        ctaContact: "Book a site visit",
-        ctaServices: "View services",
-        aboutTitle: "About us",
-        aboutText: "Elektro-Maks is a local company led by Stefan Maksimovic, an electrician experienced in building and maintaining all types of electrical systems. We focus on safe, precise, and long-lasting work, delivered within agreed deadlines.",
+        tagline: "Professional electrical installations for homes, apartments, office spaces, and industrial systems.",
+        ctaPrimary: "Book a site visit",
+        ctaSecondary: "Quick online estimate",
+        chip1: "Safety standards first",
+        chip2: "Reliable arrival at agreed time",
+        chip3: "Residential and commercial projects",
+        aboutTitle: "About the company",
+        aboutText: "Elektro-Maks is led by Stefan Maksimovic, an electrician with practical experience in electrical installation and maintenance. The focus is clean execution, reliable delivery, and clear communication from first call to final inspection.",
         servicesTitle: "Services",
-        service1: "Complete installations for new buildings and renovations",
+        service1: "Complete installations in new builds and renovations",
         service2: "Replacement of old wiring and distribution boards",
         service3: "Installation of lighting, outlets, switches, and fuses",
-        service4: "Fault detection and repair",
+        service4: "Fault diagnostics and repair",
         service5: "Grounding and installation protection",
         whyTitle: "Why Elektro-Maks",
-        why1: "Quality materials and trusted equipment",
-        why2: "Professional approach and clear communication",
-        why3: "Fast on-site response by appointment",
+        why1: "Quality materials and proven equipment",
+        why2: "Professional approach and deadline commitment",
+        why3: "Fast on-site availability",
         why4: "Compliance with safety standards",
         processTitle: "How we work",
-        process1: "Short consultation and on-site assessment.",
-        process2: "Solution proposal and agreement on scope.",
-        process3: "Installation work and final system check.",
-        processNotice: "A reliable electrical partner for your home and business.",
+        process1: "Consultation and on-site assessment.",
+        process2: "Solution proposal and clear scope agreement.",
+        process3: "Execution, testing, and handover.",
+        processNotice: "A reliable electrical partner for home and business.",
+        estimatorTitle: "Quick price estimate",
+        estimatorText: "This estimate is informational. Final price is defined after on-site inspection.",
+        labelService: "Service type",
+        labelArea: "Property area (m2)",
+        labelUrgent: "Urgent intervention (+25%)",
+        estimateButton: "Calculate estimate",
+        estimateDefault: "Enter details and click \"Calculate estimate\".",
+        estimateRange: "Estimated range: {low} - {high} RSD.",
+        estimateFaultRange: "Estimated intervention range: {low} - {high} RSD.",
+        estServiceNew: "New installation",
+        estServiceReplace: "Replace existing installation",
+        estServiceLighting: "Lighting and switches",
+        estServiceFault: "Fault repair",
         contactTitle: "Contact",
-        contactName: "Elektro-Maks, Stefan Maksimovic",
-        contactPhone: "Phone: +381 6X XXX XX XX",
+        contactPhone: "Phone: +381 60 000 0000",
         contactEmail: "E-mail: kontakt@elektro-maks.rs",
-        contactCity: "Location: Serbia",
+        contactLocation: "Location: Belgrade, Serbia",
+        labelName: "Full name",
+        labelPhone: "Phone number",
+        labelMessage: "Work description",
+        placeholderName: "Your name",
+        placeholderPhone: "+381...",
+        placeholderMessage: "Briefly describe what you need",
+        contactButton: "Prepare e-mail request",
+        contactError: "Please enter name, phone, and work description.",
+        contactMailSubject: "Electrical service inquiry",
+        contactPrepared: "E-mail request prepared.",
+        faqTitle: "Frequently asked questions",
+        faqQ1: "Do you work on weekends?",
+        faqA1: "By agreement, urgent interventions are possible on weekends.",
+        faqQ2: "Do you work only on houses and apartments?",
+        faqA2: "No. Elektro-Maks also handles business spaces and smaller industrial facilities.",
+        faqQ3: "Do you provide warranty for completed work?",
+        faqA3: "Yes, warranty is provided for completed work and installed components as agreed.",
         footerText: "© Elektro-Maks. All rights reserved."
       },
       de: {
+        navAbout: "Uber uns",
+        navServices: "Leistungen",
+        navProcess: "Ablauf",
+        navEstimator: "Schnellangebot",
+        navContact: "Kontakt",
+        navFaq: "FAQ",
         themeLight: "Hell",
         themeDark: "Dunkel",
-        tagline: "Professionelle Elektroinstallationen fur Hauser, Wohnungen, Geschaftsobjekte und Industriesysteme.",
-        ctaContact: "Vor-Ort-Termin buchen",
-        ctaServices: "Leistungen ansehen",
-        aboutTitle: "Uber uns",
-        aboutText: "Elektro-Maks ist ein lokales Unternehmen unter der Leitung von Stefan Maksimovic, einem Elektriker mit Erfahrung in der Umsetzung und Wartung aller Arten von Elektroinstallationen. Unser Fokus liegt auf sicherer, praziser und langlebiger Arbeit innerhalb vereinbarter Fristen.",
+        tagline: "Professionelle Elektroinstallationen fur Hauser, Wohnungen, Geschaftsraume und Industriesysteme.",
+        ctaPrimary: "Vor-Ort-Termin buchen",
+        ctaSecondary: "Schnelle Online-Schatzung",
+        chip1: "Sicherheitsstandards an erster Stelle",
+        chip2: "Zuverlassige Ankunft zum vereinbarten Termin",
+        chip3: "Wohn- und Gewerbeprojekte",
+        aboutTitle: "Uber das Unternehmen",
+        aboutText: "Elektro-Maks wird von Stefan Maksimovic geleitet, einem Elektriker mit praktischer Erfahrung in Elektroinstallationen und Wartung. Im Fokus stehen saubere Ausfuhrung, zuverlassige Lieferung und klare Kommunikation vom ersten Kontakt bis zur Endprufung.",
         servicesTitle: "Leistungen",
         service1: "Komplette Installationen bei Neubau und Sanierung",
-        service2: "Austausch alter Elektroinstallationen und Verteiler",
+        service2: "Austausch alter Leitungen und Verteiler",
         service3: "Montage von Beleuchtung, Steckdosen, Schaltern und Sicherungen",
-        service4: "Fehlersuche und Storungsbehebung",
-        service5: "Erdung und Schutz der Installationen",
+        service4: "Fehlerdiagnose und Reparatur",
+        service5: "Erdung und Schutz der Installation",
         whyTitle: "Warum Elektro-Maks",
-        why1: "Hochwertige Materialien und geprufte Ausrustung",
-        why2: "Professioneller Ansatz und klare Kommunikation",
-        why3: "Schneller Vor-Ort-Service nach Vereinbarung",
-        why4: "Einhaltung von Sicherheitsstandards",
+        why1: "Hochwertige Materialien und bewahrte Ausrustung",
+        why2: "Professioneller Ansatz und Termintreue",
+        why3: "Schneller Vor-Ort-Service",
+        why4: "Einhaltung der Sicherheitsstandards",
         processTitle: "So arbeiten wir",
-        process1: "Kurze Beratung und Bewertung vor Ort.",
-        process2: "Losungsvorschlag und Abstimmung des Leistungsumfangs.",
-        process3: "Ausfuhrung der Arbeiten und abschlieBende Systemprufung.",
-        processNotice: "Ein zuverlassiger Partner fur Strom in Haus und Unternehmen.",
+        process1: "Beratung und Besichtigung vor Ort.",
+        process2: "Losungsvorschlag und klare Leistungsabstimmung.",
+        process3: "Ausfuhrung, Test und Ubergabe.",
+        processNotice: "Ein zuverlassiger Strom-Partner fur Zuhause und Unternehmen.",
+        estimatorTitle: "Schnelle Preisabschatzung",
+        estimatorText: "Diese Schatzung ist informativ. Der Endpreis wird nach Vor-Ort-Prufung festgelegt.",
+        labelService: "Leistungsart",
+        labelArea: "Flache des Objekts (m2)",
+        labelUrgent: "Notfallintervention (+25%)",
+        estimateButton: "Schatzung berechnen",
+        estimateDefault: "Daten eingeben und auf \"Schatzung berechnen\" klicken.",
+        estimateRange: "Geschatzter Bereich: {low} - {high} RSD.",
+        estimateFaultRange: "Geschatzter Interventionsbereich: {low} - {high} RSD.",
+        estServiceNew: "Neue Installation",
+        estServiceReplace: "Bestehende Installation ersetzen",
+        estServiceLighting: "Beleuchtung und Schalter",
+        estServiceFault: "Fehlerbehebung",
         contactTitle: "Kontakt",
-        contactName: "Elektro-Maks, Stefan Maksimovic",
-        contactPhone: "Telefon: +381 6X XXX XX XX",
+        contactPhone: "Telefon: +381 60 000 0000",
         contactEmail: "E-mail: kontakt@elektro-maks.rs",
-        contactCity: "Standort: Serbien",
+        contactLocation: "Standort: Belgrad, Serbien",
+        labelName: "Name",
+        labelPhone: "Telefonnummer",
+        labelMessage: "Arbeitsbeschreibung",
+        placeholderName: "Ihr Name",
+        placeholderPhone: "+381...",
+        placeholderMessage: "Beschreiben Sie kurz, was Sie benotigen",
+        contactButton: "E-mail-Anfrage vorbereiten",
+        contactError: "Bitte Name, Telefonnummer und Beschreibung eingeben.",
+        contactMailSubject: "Anfrage fur Elektroarbeiten",
+        contactPrepared: "E-mail-Anfrage wurde vorbereitet.",
+        faqTitle: "Haufige Fragen",
+        faqQ1: "Arbeiten Sie am Wochenende?",
+        faqA1: "Nach Absprache sind am Wochenende Notfalleinsatze moglich.",
+        faqQ2: "Arbeiten Sie nur in Wohnungen und Hausern?",
+        faqA2: "Nein. Elektro-Maks arbeitet auch in Geschaftsraumen und kleineren Industrieobjekten.",
+        faqQ3: "Gibt es Garantie auf die ausgefuhrten Arbeiten?",
+        faqA3: "Ja, Garantie fur Arbeiten und verbaute Komponenten nach Vereinbarung.",
         footerText: "© Elektro-Maks. Alle Rechte vorbehalten."
       }
     };
 
+    const servicePrices = {
+      new: 2200,
+      replace: 2900,
+      lighting: 1400,
+      fault: 7000
+    };
+
+    function getLang() {
+      return localStorage.getItem(STORAGE_LANG_KEY) || "sr";
+    }
+
+    function getTheme() {
+      return localStorage.getItem(STORAGE_THEME_KEY) || "light";
+    }
+
+    function formatText(template, values) {
+      return template.replace(/\{(\w+)\}/g, (_, key) => values[key] ?? "");
+    }
+
+    function formatCurrency(value) {
+      return new Intl.NumberFormat("sr-RS").format(Math.round(value));
+    }
+
+    function applyTheme(theme) {
+      const lang = getLang();
+      const dictionary = translations[lang] || translations.sr;
+      document.documentElement.setAttribute("data-theme", theme);
+      document.getElementById("wallSwitch").setAttribute("aria-pressed", String(theme === "dark"));
+      document.getElementById("themeText").textContent = theme === "dark" ? dictionary.themeDark : dictionary.themeLight;
+      localStorage.setItem(STORAGE_THEME_KEY, theme);
+    }
+
     function applyTranslations(lang) {
       const dictionary = translations[lang] || translations.sr;
       document.documentElement.lang = lang;
+
       document.querySelectorAll("[data-i18n]").forEach((element) => {
         const key = element.getAttribute("data-i18n");
         if (dictionary[key]) {
@@ -429,36 +877,124 @@
         }
       });
 
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
+        const key = element.getAttribute("data-i18n-placeholder");
+        if (dictionary[key]) {
+          element.setAttribute("placeholder", dictionary[key]);
+        }
+      });
+
+      document.querySelectorAll("option[data-i18n]").forEach((option) => {
+        const key = option.getAttribute("data-i18n");
+        if (dictionary[key]) {
+          option.textContent = dictionary[key];
+        }
+      });
+
       const isDark = document.documentElement.getAttribute("data-theme") === "dark";
-      document.getElementById("themeLabel").textContent = isDark ? dictionary.themeDark : dictionary.themeLight;
+      document.getElementById("themeText").textContent = isDark ? dictionary.themeDark : dictionary.themeLight;
     }
 
-    function applyTheme(theme) {
-      document.documentElement.setAttribute("data-theme", theme);
-      localStorage.setItem(STORAGE_THEME_KEY, theme);
-      const lang = document.getElementById("langSelect").value;
-      const dictionary = translations[lang] || translations.sr;
-      document.getElementById("themeLabel").textContent = theme === "dark" ? dictionary.themeDark : dictionary.themeLight;
+    function calculateEstimate(service, area, urgent) {
+      let low;
+      let high;
+
+      if (service === "fault") {
+        low = servicePrices.fault * 0.85;
+        high = servicePrices.fault * 1.25;
+      } else {
+        const base = servicePrices[service] * area;
+        low = base * 0.85;
+        high = base * 1.15;
+      }
+
+      if (urgent) {
+        low *= 1.25;
+        high *= 1.25;
+      }
+
+      return { low, high };
     }
 
-    const savedTheme = localStorage.getItem(STORAGE_THEME_KEY) || "light";
-    const savedLang = localStorage.getItem(STORAGE_LANG_KEY) || "sr";
+    function initEstimator() {
+      const form = document.getElementById("estimatorForm");
+      const result = document.getElementById("estimateResult");
 
-    document.getElementById("langSelect").value = savedLang;
-    applyTheme(savedTheme);
-    applyTranslations(savedLang);
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const lang = getLang();
+        const dictionary = translations[lang] || translations.sr;
+        const service = document.getElementById("serviceType").value;
+        const areaValue = Number(document.getElementById("area").value);
+        const area = Number.isFinite(areaValue) && areaValue > 0 ? areaValue : 1;
+        const urgent = document.getElementById("urgent").checked;
 
-    document.getElementById("themeToggle").addEventListener("click", () => {
-      const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
-      const nextTheme = currentTheme === "dark" ? "light" : "dark";
-      applyTheme(nextTheme);
-    });
+        const { low, high } = calculateEstimate(service, area, urgent);
+        const key = service === "fault" ? "estimateFaultRange" : "estimateRange";
 
-    document.getElementById("langSelect").addEventListener("change", (event) => {
-      const lang = event.target.value;
-      localStorage.setItem(STORAGE_LANG_KEY, lang);
-      applyTranslations(lang);
-    });
+        result.textContent = formatText(dictionary[key], {
+          low: formatCurrency(low),
+          high: formatCurrency(high)
+        });
+      });
+    }
+
+    function initContactForm() {
+      const form = document.getElementById("contactForm");
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const lang = getLang();
+        const dictionary = translations[lang] || translations.sr;
+        const name = document.getElementById("name").value.trim();
+        const phone = document.getElementById("phone").value.trim();
+        const message = document.getElementById("message").value.trim();
+
+        if (!name || !phone || !message) {
+          alert(dictionary.contactError);
+          return;
+        }
+
+        const body =
+          `Ime: ${name}\n` +
+          `Telefon: ${phone}\n` +
+          `Opis: ${message}\n`;
+        const subject = encodeURIComponent(dictionary.contactMailSubject);
+        const mailBody = encodeURIComponent(body);
+        window.location.href = `mailto:kontakt@elektro-maks.rs?subject=${subject}&body=${mailBody}`;
+      });
+    }
+
+    function initThemeSwitch() {
+      const wallSwitch = document.getElementById("wallSwitch");
+      wallSwitch.addEventListener("click", () => {
+        const current = getTheme();
+        const next = current === "dark" ? "light" : "dark";
+        applyTheme(next);
+      });
+    }
+
+    function initLanguageSwitch() {
+      const langSelect = document.getElementById("langSelect");
+      langSelect.value = getLang();
+
+      langSelect.addEventListener("change", (event) => {
+        const lang = event.target.value;
+        localStorage.setItem(STORAGE_LANG_KEY, lang);
+        applyTranslations(lang);
+      });
+    }
+
+    function init() {
+      initLanguageSwitch();
+      applyTheme(getTheme());
+      applyTranslations(getLang());
+      initThemeSwitch();
+      initEstimator();
+      initContactForm();
+    }
+
+    init();
   </script>
 </body>
 </html>
