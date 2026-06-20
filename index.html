@@ -4,6 +4,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Analytics 4 (GA4) — visitor tracking
+       Measurement ID: G-QEXLE8Y7JK
+       Manage in https://analytics.google.com (Admin → Data Streams → web stream). -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QEXLE8Y7JK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-QEXLE8Y7JK');
+  </script>
+
   <title>Petar Tešić | Software Engineer</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="theme.css">
@@ -65,6 +77,33 @@
       background-color: #0f62fe;
       color: white;
       text-align: center;
+    }
+    /* Visitor counter badge */
+    .visitor-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      padding: 0.35rem 0.9rem;
+      background-color: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 999px;
+      color: #ffffff;
+      font-size: 0.9rem;
+      font-weight: 600;
+      line-height: 1;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    }
+    .visitor-badge .visitor-icon {
+      font-size: 1rem;
+      line-height: 1;
+    }
+    .visitor-badge .visitor-count {
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.3px;
+    }
+    @media (max-width: 480px) {
+      .visitor-badge { font-size: 0.82rem; padding: 0.3rem 0.75rem; }
     }
     .profile-pic {
       width: 230px;
@@ -421,6 +460,11 @@
           <img src="images/petar_profile_picture.jpeg" alt="Petar Tesic" class="profile-pic">
           <h1>Petar Tešić</h1>
           <p>Software Engineer @ Microsoft <span class="mobile-sep">|</span><br class="mobile-only" /> PhD Student @ Faculty of Mathematics, University of Belgrade</p>
+          <div class="visitor-badge" title="Total visits to this site">
+            <span class="visitor-icon" aria-hidden="true">&#128064;</span>
+            <span class="visitor-count" id="visitorCount">…</span>
+            <span>visitors</span>
+          </div>
   </header>  
         <div class="container">
         <section id="about" class="px-4">
@@ -768,6 +812,31 @@
 
   // Initialize proper state on page load
   handleResize();
+</script>
+
+<!-- Visitor counter: uses Abacus (free, no account, CountAPI replacement).
+     Counts one hit per page load and displays the running total in the header badge. -->
+<script>
+  (function () {
+    var countEl = document.getElementById('visitorCount');
+    if (!countEl) return;
+
+    function render(value) {
+      if (typeof value === 'number' && isFinite(value)) {
+        countEl.textContent = value.toLocaleString('en-US');
+      } else {
+        countEl.textContent = '—';
+      }
+    }
+
+    // namespace/key identify this site's counter; change "key" to reset.
+    var hitUrl = 'https://abacus.jasoncameron.dev/hit/posteruole-com/site-visits';
+
+    fetch(hitUrl)
+      .then(function (res) { return res.json(); })
+      .then(function (data) { render(data && data.value); })
+      .catch(function () { render(null); });
+  })();
 </script>
 
 </body>
