@@ -5,6 +5,30 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- SEO meta tags -->
+  <meta name="description" content="Petar Tešić — Software Engineer at Microsoft and PhD student at the Faculty of Mathematics, University of Belgrade. Portfolio of projects, experience, and skills in software engineering, compilers, and machine learning." />
+  <meta name="author" content="Petar Tešić" />
+  <meta name="keywords" content="Petar Tešić, Software Engineer, Microsoft, PhD, LLVM, Compilers, Machine Learning, Belgrade, Portfolio" />
+  <link rel="canonical" href="https://www.posteruole.com/" />
+
+  <!-- Open Graph (Facebook, LinkedIn) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Petar Tešić | Software Engineer" />
+  <meta property="og:description" content="Software Engineer at Microsoft and PhD student at the University of Belgrade. Explore my projects, experience, and skills." />
+  <meta property="og:url" content="https://www.posteruole.com/" />
+  <meta property="og:image" content="https://www.posteruole.com/images/petar_profile_picture.jpeg" />
+  <meta property="og:site_name" content="Petar Tešić" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Petar Tešić | Software Engineer" />
+  <meta name="twitter:description" content="Software Engineer at Microsoft and PhD student at the University of Belgrade." />
+  <meta name="twitter:image" content="https://www.posteruole.com/images/petar_profile_picture.jpeg" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/jpeg" href="images/petar_profile_picture.jpeg" />
+  <link rel="apple-touch-icon" href="images/petar_profile_picture.jpeg" />
+
   <!-- Google Analytics 4 (GA4) — visitor tracking
        Measurement ID: G-QEXLE8Y7JK
        Manage in https://analytics.google.com (Admin → Data Streams → web stream). -->
@@ -27,6 +51,7 @@
       margin: 0;
       padding: 0;
       overflow-x: hidden;
+      scroll-behavior: smooth;
     }
     body {
       margin: 0;
@@ -420,6 +445,76 @@
     #layoutRow {
       flex-wrap: nowrap;
     }
+
+    /* Scroll reveal animation for sections */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      will-change: opacity, transform;
+    }
+    .reveal.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Back to top button */
+    .back-to-top {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 1055;
+      width: 46px;
+      height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #0f62fe;
+      color: #ffffff;
+      border: none;
+      border-radius: 50%;
+      font-size: 1.3rem;
+      line-height: 1;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(12px);
+      transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
+    }
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .back-to-top:hover {
+      background-color: #004080;
+      transform: translateY(-2px);
+    }
+    .back-to-top:focus-visible {
+      outline: 3px solid rgba(255, 255, 255, 0.7);
+      outline-offset: 2px;
+    }
+    @media (max-width: 480px) {
+      .back-to-top {
+        right: 14px;
+        bottom: 14px;
+        width: 42px;
+        height: 42px;
+        font-size: 1.15rem;
+      }
+    }
+
+    /* Respect users who prefer reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+      .back-to-top { transition: none; }
+    }
   </style>
 </head>
 <body>
@@ -676,7 +771,7 @@
         <a href="mailto:posteru.ole@gmail.com">
           <img src="images/gmail.ico" alt="Gmail" class="icon">
         </a>
-        <a href="https://instagram.com/yourusername" target="_blank">
+        <a href="https://www.instagram.com/_posteru.ole_/" target="_blank">
           <img src="images/instagram_icon.png" alt="Instagram" class="icon">
         </a>
       </div>
@@ -690,6 +785,11 @@
       
     </div>
   </div>
+
+  <!-- Back to top button -->
+  <button id="backToTop" class="back-to-top" aria-label="Back to top" title="Back to top">
+    &#8679;
+  </button>
 
 <script>
   const hamburgerBtn = document.getElementById('hamburgerBtn');
@@ -812,6 +912,56 @@
 
   // Initialize proper state on page load
   handleResize();
+</script>
+
+<!-- Back-to-top button + scroll reveal animations -->
+<script>
+  (function () {
+    var prefersReduced = window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* Back to top button */
+    var backToTop = document.getElementById('backToTop');
+    if (backToTop) {
+      var toggleBackToTop = function () {
+        if (window.scrollY > 300) {
+          backToTop.classList.add('show');
+        } else {
+          backToTop.classList.remove('show');
+        }
+      };
+      window.addEventListener('scroll', toggleBackToTop, { passive: true });
+      toggleBackToTop();
+      backToTop.addEventListener('click', function () {
+        window.scrollTo({
+          top: 0,
+          behavior: prefersReduced ? 'auto' : 'smooth'
+        });
+      });
+    }
+
+    /* Scroll reveal: fade sections in as they enter the viewport */
+    var revealEls = document.querySelectorAll('#mainContent section, #mainContent .styled-hr');
+
+    if (prefersReduced || !('IntersectionObserver' in window)) {
+      // No animation: just make sure everything is visible.
+      revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+      return;
+    }
+
+    revealEls.forEach(function (el) { el.classList.add('reveal'); });
+
+    var observer = new IntersectionObserver(function (entries, obs) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+    revealEls.forEach(function (el) { observer.observe(el); });
+  })();
 </script>
 
 <!-- Visitor counter: uses Abacus (free, no account, CountAPI replacement).
