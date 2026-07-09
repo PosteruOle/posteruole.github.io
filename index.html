@@ -416,6 +416,59 @@
       color: #0f62fe;
       margin-top: 2rem;
     }
+    /* Interests / travel section */
+    .interests-intro {
+      color: #444;
+      line-height: 1.6;
+    }
+    .interests-count {
+      display: inline-block;
+      background-color: #0f62fe;
+      color: #fff;
+      font-weight: 700;
+      padding: 0.15rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+    }
+    .country-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 0.75rem;
+      margin: 1.5rem 0 0.5rem;
+      padding: 0;
+      list-style: none;
+    }
+    .country-chip {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.55rem 0.85rem;
+      background-color: #f4f8ff;
+      border: 1px solid #d6e4ff;
+      border-radius: 10px;
+      font-weight: 600;
+      color: #053c8f;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    }
+    .country-chip:hover {
+      transform: translateY(-3px);
+      background-color: #e7f0ff;
+      box-shadow: 0 4px 12px rgba(15, 98, 254, 0.18);
+    }
+    .country-chip .flag {
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+    .country-chip .country-name {
+      font-size: 0.95rem;
+    }
+    .country-chip .sub-regions {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #5a6b85;
+      margin-top: 0.15rem;
+    }
     .icon {
       width: 36px;
       height: 36px;
@@ -545,6 +598,7 @@
         <a href="#projects">Projects</a>
         <a href="#skills">Skills</a>
         <a href="#web-games">Web games</a>
+        <a href="#interests">Interests</a>
         <a href="#contact">Contact</a>
       </nav>
 
@@ -754,6 +808,39 @@
                 <p>Includes options for principal, rate, years, and compounding frequency. </p>
                 <p>Try it out: <a href="compound_calculator.html" target="_blank" class="project-link">📈 Try Calculator</a>.</p>    
           </div>
+        </section>
+
+        <hr class="styled-hr">
+
+        <section id="interests" class="px-4">
+          <h2 class="section-title">Interests</h2>
+          <p class="interests-intro">
+            Beyond code, I love travelling and exploring different countries and cultures.
+            So far I've been lucky enough to visit
+            <span class="interests-count">18 countries</span>
+            across Europe and the United States. More adventures to come!
+          </p>
+          <h3>Countries &amp; cultures I've visited</h3>
+          <ul class="country-grid">
+            <li class="country-chip"><span class="flag">&#127462;&#127481;</span><span class="country-name">Austria</span></li>
+            <li class="country-chip"><span class="flag">&#127463;&#127462;</span><span class="country-name">Bosnia &amp; Herzegovina</span></li>
+            <li class="country-chip"><span class="flag">&#127469;&#127479;</span><span class="country-name">Croatia</span></li>
+            <li class="country-chip"><span class="flag">&#127464;&#127487;</span><span class="country-name">Czech Republic</span></li>
+            <li class="country-chip"><span class="flag">&#127467;&#127479;</span><span class="country-name">France</span></li>
+            <li class="country-chip"><span class="flag">&#127465;&#127466;</span><span class="country-name">Germany</span></li>
+            <li class="country-chip"><span class="flag">&#127468;&#127479;</span><span class="country-name">Greece</span></li>
+            <li class="country-chip"><span class="flag">&#127469;&#127482;</span><span class="country-name">Hungary</span></li>
+            <li class="country-chip"><span class="flag">&#127470;&#127481;</span><span class="country-name">Italy</span></li>
+            <li class="country-chip"><span class="flag">&#127474;&#127481;</span><span class="country-name">Malta</span></li>
+            <li class="country-chip"><span class="flag">&#127474;&#127466;</span><span class="country-name">Montenegro</span></li>
+            <li class="country-chip"><span class="flag">&#127474;&#127472;</span><span class="country-name">North Macedonia</span></li>
+            <li class="country-chip"><span class="flag">&#127477;&#127481;</span><span class="country-name">Portugal</span></li>
+            <li class="country-chip"><span class="flag">&#127479;&#127480;</span><span class="country-name">Serbia<span class="sub-regions">home</span></span></li>
+            <li class="country-chip"><span class="flag">&#127480;&#127470;</span><span class="country-name">Slovenia</span></li>
+            <li class="country-chip"><span class="flag">&#127466;&#127480;</span><span class="country-name">Spain</span></li>
+            <li class="country-chip"><span class="flag">&#127481;&#127479;</span><span class="country-name">Turkey</span></li>
+            <li class="country-chip"><span class="flag">&#127482;&#127480;</span><span class="country-name">United States<span class="sub-regions">California &middot; Washington &middot; New York</span></span></li>
+          </ul>
         </section>
 
         <hr class="styled-hr">
